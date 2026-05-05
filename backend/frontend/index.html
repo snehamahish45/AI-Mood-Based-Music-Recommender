@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Mood Music Recommender</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- LEFT PANEL -->
+    <div class="left-panel">
+
+        <h1>🎧 AI Mood Music</h1>
+
+        <!-- LANGUAGE -->
+        <div class="section">
+            <h3>Select Language</h3>
+            <select id="languageSelect" class="dropdown">
+                <option value="">-- Select Language --</option>
+                <option value="english">English</option>
+                <option value="hindi">Hindi</option>
+                <option value="bengali">Bengali</option>
+                <option value="tamil">Tamil</option>
+                <option value="telugu">Telugu</option>
+                <option value="marathi">Marathi</option>
+                <option value="gujarati">Gujarati</option>
+                <option value="kannada">Kannada</option>
+                <option value="malayalam">Malayalam</option>
+                <option value="punjabi">Punjabi</option>
+                <option value="assamese">Assamese</option>
+                <option value="odia">Odia</option>
+                <option value="urdu">Urdu</option>
+            </select>
+        </div>
+
+        <!-- TEXT INPUT -->
+        <div class="section">
+            <h3>How are you feeling?</h3>
+            <textarea id="userText" placeholder="Type your feeling..."></textarea>
+            <p class="hint">✨ Mood auto-detected</p>
+        </div>
+
+        <!-- MOOD BUTTONS -->
+        <div class="section">
+            <h3>Or select mood</h3>
+            <div class="btn-group">
+                <button class="mood-btn" onclick="selectEmotion('joy', this)">😊 Joy</button>
+                <button class="mood-btn" onclick="selectEmotion('sad', this)">😢 Sad</button>
+                <button class="mood-btn" onclick="selectEmotion('love', this)">❤️ Love</button>
+                <button class="mood-btn" onclick="selectEmotion('calm', this)">😌 Calm</button>
+                <button class="mood-btn" onclick="selectEmotion('angry', this)">😡 Angry</button>
+            </div>
+        </div>
+
+        <!-- ANALYZE -->
+        <button class="analyze-btn" onclick="getEmotion()">🎧 Analyze Mood</button>
+
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="right-panel">
+
+        <!-- PLAYER -->
+        <div class="player-container">
+            <div id="videoPlayer" class="video-player"></div>
+
+            <div class="player-controls">
+                <button onclick="prevSong()">⏮</button>
+                <button onclick="nextSong()">⏭</button>
+            </div>
+
+            <button class="refresh-float" onclick="getEmotion(true)">🔄</button>
+        </div>
+
+        <!-- MOOD OUTPUT -->
+        <div id="emotion" class="mood-box">
+            🤖 Your mood insight will appear here...
+        </div>
+
+        <!-- SONG LIST -->
+        <div id="songs"></div>
+
+        <!-- LOADER -->
+        <div id="loader" class="loader hidden">⏳ Loading...</div>
+
+    </div>
+
+</div>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="/static/script.js"></script>
+
+</body>
+</html>
