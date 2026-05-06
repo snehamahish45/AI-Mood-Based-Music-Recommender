@@ -1,6 +1,12 @@
 from sentence_transformers import SentenceTransformer, util
 
-model = SentenceTransformer('all-MiniLM-L6-v2')
+model = None
+
+def load_model():
+    global model
+    if model is None:
+        model = SentenceTransformer('all-MiniLM-L6-v2')
+    return model
 
 emotion_bank = {
     "joy": ["happy", "excited", "fun"],
@@ -24,13 +30,14 @@ def detect_emotion_semantic(text):
         return "joy"
 
     # fallback to model
-    text_embedding = model.encode(text, convert_to_tensor=True)
+    model_instance = load_model()
+    text_embedding = model_instance.encode(text, convert_to_tensor=True)
 
     best_emotion = None
     best_score = -1
 
     for emotion, samples in emotion_bank.items():
-        sample_embeddings = model.encode(samples, convert_to_tensor=True)
+        sample_embeddings = model_instance.encode(samples, convert_to_tensor=True)
         score = util.cos_sim(text_embedding, sample_embeddings).mean().item()
 
         if score > best_score:
