@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI Mood Based Music Recommender — detect your mood and get song recommendations">
+    <title>🎧 AI Mood Music</title>
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎧</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- ===================== -->
+    <!-- LEFT PANEL            -->
+    <!-- ===================== -->
+    <div class="left-panel">
+
+        <h1>🎧 AI Mood Music</h1>
+        <p class="subtitle">Let AI detect your mood & play the perfect songs</p>
+
+        <!-- LANGUAGE -->
+        <div class="section">
+            <h3>🌐 Select Language</h3>
+            <select id="languageSelect" class="dropdown">
+                <option value="">-- Select Language --</option>
+                <option value="english">🇬🇧 English</option>
+                <option value="hindi">🇮🇳 Hindi</option>
+                <option value="bengali">🇮🇳 Bengali</option>
+                <option value="tamil">🇮🇳 Tamil</option>
+                <option value="telugu">🇮🇳 Telugu</option>
+                <option value="marathi">🇮🇳 Marathi</option>
+                <option value="gujarati">🇮🇳 Gujarati</option>
+                <option value="kannada">🇮🇳 Kannada</option>
+                <option value="malayalam">🇮🇳 Malayalam</option>
+                <option value="punjabi">🇮🇳 Punjabi</option>
+                <option value="assamese">🇮🇳 Assamese</option>
+                <option value="odia">🇮🇳 Odia</option>
+                <option value="urdu">🇵🇰 Urdu</option>
+            </select>
+        </div>
+
+        <!-- TEXT INPUT -->
+        <div class="section">
+            <h3>💬 How are you feeling?</h3>
+            <textarea
+                id="userText"
+                placeholder="Type your feeling... e.g. I feel lonely today"
+                maxlength="500"
+                oninput="updateCharCount(this)"
+            ></textarea>
+            <div class="char-counter">
+                <span id="charCount">0</span>/500
+            </div>
+            <p class="hint">✨ Mood will be auto-detected from your text</p>
+        </div>
+
+        <!-- MOOD BUTTONS -->
+        <div class="section">
+            <h3>🎭 Or select mood manually</h3>
+            <div class="btn-group">
+                <button class="mood-btn" onclick="selectEmotion('joy', this)">😊 Joy</button>
+                <button class="mood-btn" onclick="selectEmotion('sad', this)">😢 Sad</button>
+                <button class="mood-btn" onclick="selectEmotion('love', this)">❤️ Love</button>
+                <button class="mood-btn" onclick="selectEmotion('calm', this)">😌 Calm</button>
+                <button class="mood-btn" onclick="selectEmotion('angry', this)">😡 Angry</button>
+                <button class="mood-btn" onclick="selectEmotion('motivated', this)">💪 Motivated</button>
+                <button class="mood-btn" onclick="selectEmotion('anxious', this)">😰 Anxious</button>
+            </div>
+        </div>
+
+        <!-- ANALYZE BUTTON -->
+        <button class="analyze-btn" onclick="getEmotion()" id="analyzeBtn">
+            🎧 Analyze Mood & Play
+        </button>
+
+        <!-- CLEAR BUTTON -->
+        <button class="clear-btn" onclick="clearAll()">
+            🗑️ Clear
+        </button>
+
+    </div>
+
+    <!-- ===================== -->
+    <!-- RIGHT PANEL           -->
+    <!-- ===================== -->
+    <div class="right-panel">
+
+        <!-- PLAYER -->
+        <div class="player-container" id="playerContainer">
+
+            <!-- VIDEO -->
+            <div id="videoPlayer" class="video-player">
+                <div class="player-placeholder">
+                    🎵 Your music will play here
+                </div>
+            </div>
+
+            <!-- NOW PLAYING -->
+            <div class="now-playing" id="nowPlaying"></div>
+
+            <!-- CONTROLS -->
+            <div class="player-controls">
+                <button onclick="prevSong()" title="Previous">⏮ Prev</button>
+                <button onclick="nextSong()" title="Next">Next ⏭</button>
+            </div>
+
+            <!-- OPEN IN YOUTUBE -->
+            <a id="ytLink" class="yt-link hidden" target="_blank">
+                ▶ Open in YouTube
+            </a>
+
+            <!-- REFRESH -->
+            <button class="refresh-float" onclick="getEmotion(true)" title="Refresh songs">
+                🔄
+            </button>
+
+        </div>
+
+        <!-- MOOD OUTPUT -->
+        <div id="emotion" class="mood-box">
+            🤖 Your mood insight will appear here...
+        </div>
+
+        <!-- SONG COUNT -->
+        <div id="songCount" class="song-count hidden"></div>
+
+        <!-- SONG LIST -->
+        <div id="songs"></div>
+
+        <!-- LOADER -->
+        <div id="loader" class="loader hidden">
+            <div class="spinner"></div>
+            <p>🎵 Detecting mood & finding songs...</p>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="script.js"></script>
+
+</body>
+</html>

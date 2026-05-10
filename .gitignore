@@ -1,5 +1,115 @@
+# ===============================
+# 🐍 PYTHON
+# ===============================
 __pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
 *.pyc
+
+# ===============================
+# 📦 VIRTUAL ENVIRONMENT
+# ===============================
 venv/
+env/
+.env/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# ===============================
+# 🔐 ENVIRONMENT VARIABLES
+# ===============================
 .env
-.cache/
+.env.local
+.env.production
+.env.development
+*.env
+
+# ===============================
+# 🤖 ML MODELS (large files)
+# ===============================
+backend/model/emotion_model.pkl
+backend/model/vectorizer.pkl
+
+# ===============================
+# 📊 DATASETS (large files)
+# ===============================
+backend/data/*.csv
+backend/data/*.json
+backend/data/*.xlsx
+
+# ===============================
+# 🗂️ IDE & EDITOR
+# ===============================
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.cursor/
+
+# ===============================
+# 🪟 WINDOWS
+# ===============================
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# ===============================
+# 🍎 MAC
+# ===============================
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# ===============================
+# 📝 LOGS
+# ===============================
+*.log
+logs/
+log/
+
+# ===============================
+# 🧪 TESTING
+# ===============================
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+*.cover
+
+# ===============================
+# 📦 NODE (if any frontend tools)
+# ===============================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ===============================
+# ⚡ RENDER / VERCEL
+# ===============================
+.vercel/
+.render/
+
+# ===============================
+# 🗃️ MISC
+# ===============================
+*.zip
+*.tar.gz
+*.rar
+dist/
+build/
+*.egg-info/
+.eggs/
