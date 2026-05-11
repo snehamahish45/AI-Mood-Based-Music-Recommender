@@ -4,7 +4,7 @@
 const BACKEND_URL = window.location.hostname === "localhost" ||
                     window.location.hostname === "127.0.0.1"
     ? "http://127.0.0.1:8000"
-    : "https://ai-mood-based-music-recommender1.onrender.com"; // 👈 replace after Render deploy
+    : "https://ai-mood-based-music-recommender-1.onrender.com"; // 👈 replace after Render deploy
 
 console.log("🌐 Backend URL:", BACKEND_URL);
 
