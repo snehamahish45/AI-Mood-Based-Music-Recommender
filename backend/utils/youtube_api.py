@@ -3,7 +3,6 @@ import random
 
 def get_songs_by_emotion(emotion, language):
 
-    # ✅ EXPANDED MOOD MAP (includes new emotions)
     mood_map = {
         "calm":      "chill relaxing songs",
         "sad":       "sad emotional songs",
@@ -14,75 +13,72 @@ def get_songs_by_emotion(emotion, language):
         "anxious":   "soothing anxiety relief songs"
     }
 
-    keyword = mood_map.get(emotion, f"{emotion} songs")
-
-    # ✅ RANDOM VARIATION TO AVOID SAME RESULTS
+    keyword  = mood_map.get(emotion, f"{emotion} songs")
     variations = ["latest", "new", "trending", "top", "viral", "best", "popular"]
     random_word = random.choice(variations)
-
     query = f"{random_word} {language} {keyword}"
+
     print(f"🔍 QUERY: {query}")
 
-    # ✅ LOCAL previous_ids (not global — resets each call, avoids stale data)
-    previous_ids = set()
-
+    # ✅ BETTER OPTIONS TO BYPASS RENDER RESTRICTIONS
     ydl_opts = {
         'quiet': True,
         'skip_download': True,
-        'extract_flat': False,
+        'extract_flat': True,   # ✅ faster — no full extraction
+        'no_warnings': True,
+        'ignoreerrors': True,
+        'http_headers': {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+                          'AppleWebKit/537.36 (KHTML, like Gecko) '
+                          'Chrome/120.0.0.0 Safari/537.36',
+            'Accept-Language': 'en-US,en;q=0.9',
+        }
     }
 
     songs = []
+    previous_ids = set()
 
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             results = ydl.extract_info(
-                f"ytsearch20:{query}",
+                f"ytsearch15:{query}",
                 download=False
             )
 
-        entries = results.get("entries", [])
+        entries = results.get("entries", []) if results else []
         print(f"📦 RAW RESULTS: {len(entries)}")
 
-        # ✅ SHUFFLE FOR VARIETY
         random.shuffle(entries)
 
         for video in entries:
-
             if not video:
                 continue
 
-            vid      = video.get("id")
-            title    = video.get("title")
-            duration = video.get("duration") or 0
+            vid   = video.get("id")
+            title = video.get("title")
 
             if not vid or not title:
                 continue
 
-            # ✅ SKIP DUPLICATES
             if vid in previous_ids:
                 continue
 
-            # ✅ SKIP LIVESTREAMS & VERY LONG VIDEOS (over 10 mins)
-            if duration == 0 or duration > 600:
-                print(f"⏩ Skipping long/live video: {title} ({duration}s)")
-                continue
+            # ✅ with extract_flat, duration may be None — skip that check
+            duration = video.get("duration") or 0
 
-            # ✅ SKIP SHORT VIDEOS (under 1 min — usually ads/clips)
-            if duration < 60:
-                print(f"⏩ Skipping short video: {title} ({duration}s)")
+            # only filter if duration is available
+            if duration and (duration > 600 or duration < 60):
                 continue
 
             previous_ids.add(vid)
 
-            # ✅ SAFE THUMBNAIL FALLBACK
             thumbnail = video.get("thumbnail")
             if not thumbnail:
                 thumbnail = f"https://img.youtube.com/vi/{vid}/hqdefault.jpg"
 
             songs.append({
                 "name":      title,
-                "artist":    video.get("uploader", "Unknown Artist"),
+                "artist":    video.get("uploader") or video.get("channel") or "Unknown Artist",
                 "thumbnail": thumbnail,
                 "videoId":   vid,
                 "duration":  duration
@@ -94,52 +90,56 @@ def get_songs_by_emotion(emotion, language):
     except Exception as e:
         print(f"❌ yt-dlp ERROR: {e}")
 
-    # ✅ FALLBACK IF EMPTY
+    # ✅ FALLBACK
     if not songs:
-        print("⚠️ EMPTY → USING FALLBACK QUERY")
-        fallback_query = f"trending {language} songs"
+        print("⚠️ EMPTY → FALLBACK")
+        fallback_queries = [
+            f"trending {language} songs",
+            f"popular {language} music",
+            f"best {language} songs 2024"
+        ]
 
-        try:
-            with yt_dlp.YoutubeDL({'quiet': True, 'skip_download': True}) as ydl:
-                results = ydl.extract_info(
-                    f"ytsearch20:{fallback_query}",
-                    download=False
-                )
+        for fallback_query in fallback_queries:
+            if songs:
+                break
 
-            entries = results.get("entries", [])
-            random.shuffle(entries)
+            try:
+                with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                    results = ydl.extract_info(
+                        f"ytsearch15:{fallback_query}",
+                        download=False
+                    )
 
-            for video in entries:
-                if not video:
-                    continue
+                entries = results.get("entries", []) if results else []
+                random.shuffle(entries)
 
-                vid      = video.get("id")
-                title    = video.get("title")
-                duration = video.get("duration") or 0
+                for video in entries:
+                    if not video:
+                        continue
 
-                if not vid or not title:
-                    continue
+                    vid   = video.get("id")
+                    title = video.get("title")
 
-                if duration == 0 or duration > 600 or duration < 60:
-                    continue
+                    if not vid or not title:
+                        continue
 
-                thumbnail = video.get("thumbnail")
-                if not thumbnail:
-                    thumbnail = f"https://img.youtube.com/vi/{vid}/hqdefault.jpg"
+                    thumbnail = video.get("thumbnail")
+                    if not thumbnail:
+                        thumbnail = f"https://img.youtube.com/vi/{vid}/hqdefault.jpg"
 
-                songs.append({
-                    "name":      title,
-                    "artist":    video.get("uploader", "Unknown Artist"),
-                    "thumbnail": thumbnail,
-                    "videoId":   vid,
-                    "duration":  duration
-                })
+                    songs.append({
+                        "name":      title,
+                        "artist":    video.get("uploader") or video.get("channel") or "Unknown",
+                        "thumbnail": thumbnail,
+                        "videoId":   vid,
+                        "duration":  video.get("duration") or 0
+                    })
 
-                if len(songs) >= 10:
-                    break
+                    if len(songs) >= 10:
+                        break
 
-        except Exception as e:
-            print(f"❌ FALLBACK ERROR: {e}")
+            except Exception as e:
+                print(f"❌ FALLBACK ERROR: {e}")
 
     print(f"✅ FINAL SONG COUNT: {len(songs)}")
     return songs[:10]
