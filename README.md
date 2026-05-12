@@ -23,6 +23,7 @@ Uvicorn
 Scikit-learn
 Pandas
 NumPy
+---
 📂 Project Structure
 AI-Mood-Music-Recommender/
 │
@@ -40,9 +41,8 @@ AI-Mood-Music-Recommender/
 │
 └── frontend/
     └── index.html
+---
 ⚙️ Installation
-1️⃣ Clone Repository
-git clone https://github.com/your-username/AI-Mood-Music-Recommender.git
 
 cd AI-Mood-Music-Recommender
 2️⃣ Create Virtual Environment
