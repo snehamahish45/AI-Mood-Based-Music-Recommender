@@ -1,127 +1,193 @@
-🎵 AI Mood-Based Music Recommender
+# 🎵 AI Mood-Based Music Recommender
 
 An intelligent AI-powered music recommendation system that detects user emotions from text input and recommends songs accordingly using semantic emotion analysis and YouTube search.
 
-Built with FastAPI, Sentence Transformers, and yt-dlp.
+Built with **FastAPI**, **Sentence Transformers**, and **yt-dlp**.
 
-🚀 Features
-🎭 AI-based emotion detection using NLP
-🧠 Semantic similarity matching with Sentence Transformers
-⚡ Fast rule-based emotion detection
-🌍 Multi-language song recommendations
-🎵 Dynamic YouTube music search
-🔥 Trending & mood-based playlists
-📱 REST API support
-☁️ Render deployment ready
-🛠️ Technologies Used
-Python
-FastAPI
-Sentence Transformers
-PyTorch
-yt-dlp
-Uvicorn
-Scikit-learn
-Pandas
-NumPy
 ---
-📂 Project Structure
+
+# 🚀 Features
+
+- 🎭 AI-based emotion detection using NLP
+- 🧠 Semantic similarity matching with Sentence Transformers
+- ⚡ Fast rule-based emotion detection
+- 🌍 Multi-language song recommendations
+- 🎵 Dynamic YouTube music search
+- 🔥 Trending & mood-based playlists
+- 📱 REST API support
+- ☁️ Render deployment ready
+
+---
+
+# 🛠️ Technologies Used
+
+- Python
+- FastAPI
+- Sentence Transformers
+- PyTorch
+- yt-dlp
+- Uvicorn
+- Scikit-learn
+- Pandas
+- NumPy
+
+---
+
+# 📂 Project Structure
+
+```bash
 AI-Mood-Music-Recommender/
 │
-├── app.py
-├── routes/
-│   └── predict.py
+├── backend/
+│   ├── app.py
+│   │
+│   ├── routes/
+│   │   └── predict.py
+│   │
+│   └── utils/
+│       ├── emotion_similarity.py
+│       └── youtube_api.py
 │
-├── utils/
-│   ├── emotion_similarity.py
-│   └── youtube_api.py
+├── frontend/
+│   └── index.html
 │
 ├── requirements.txt
 ├── runtime.txt
 ├── render.yaml
-│
-└── frontend/
-    └── index.html
----
-⚙️ Installation
+└── README.md
+```
 
-cd AI-Mood-Music-Recommender
-2️⃣ Create Virtual Environment
-Windows
+---
+
+# ⚙️ Installation
+
+## 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/snehamahish45/AI-Mood-Based-Music-Recommender.git
+
+cd AI-Mood-Based-Music-Recommender
+```
+
+---
+
+## 2️⃣ Create Virtual Environment
+
+### Windows
+
+```bash
 python -m venv venv
 
 venv\Scripts\activate
-Linux / Mac
+```
+
+### Linux / Mac
+
+```bash
 python3 -m venv venv
 
 source venv/bin/activate
-3️⃣ Install Dependencies
+```
+
+---
+
+## 3️⃣ Install Dependencies
+
+```bash
 pip install -r requirements.txt
+```
 
-Dependencies are defined in requirements.txt including:
+Dependencies include:
 
-FastAPI
-Sentence Transformers
-Torch
-yt-dlp
-Uvicorn
-Scikit-learn
+- FastAPI
+- Sentence Transformers
+- Torch
+- yt-dlp
+- Uvicorn
+- Scikit-learn
 
-▶️ Run the Project
+---
+
+# ▶️ Run the Project
+
+```bash
 python app.py
+```
 
 Server runs at:
 
+```bash
 http://127.0.0.1:8000
+```
 
-Backend configuration uses FastAPI + Uvicorn.
+Backend configuration uses **FastAPI + Uvicorn**.
 
-🧠 Emotion Detection System
+---
+
+# 🧠 Emotion Detection System
 
 The project supports these emotions:
 
-Joy
-Sad
-Calm
-Love
-Angry
-Motivated
-Anxious
+- Joy
+- Sad
+- Calm
+- Love
+- Angry
+- Motivated
+- Anxious
 
 Emotion detection is implemented using:
 
-Rule-based keyword matching
-Semantic similarity using Sentence Transformers
+- Rule-based keyword matching
+- Semantic similarity using Sentence Transformers
 
-🌍 Supported Languages
-English
-Hindi
-Bengali
-Tamil
-Telugu
-Marathi
-Gujarati
-Kannada
-Malayalam
-Punjabi
-Assamese
-Odia
-Urdu
+---
 
-📡 API Endpoint
-POST /predict
-Request Body
+# 🌍 Supported Languages
+
+- English
+- Hindi
+- Bengali
+- Tamil
+- Telugu
+- Marathi
+- Gujarati
+- Kannada
+- Malayalam
+- Punjabi
+- Assamese
+- Odia
+- Urdu
+
+---
+
+# 📡 API Endpoint
+
+## POST `/predict`
+
+### Request Body
+
+```json
 {
   "text": "I feel very happy today",
   "language": "english"
 }
+```
 
 OR
 
+```json
 {
   "emotion": "joy",
   "language": "hindi"
 }
-Response Example
+```
+
+---
+
+### Response Example
+
+```json
 {
   "emotion": "joy",
   "message": "Showing joy songs 🎧",
@@ -136,37 +202,45 @@ Response Example
     }
   ]
 }
+```
 
-Prediction route implementation:
+---
 
-🎵 Song Recommendation System
+# 🎵 Song Recommendation System
 
-Songs are fetched dynamically from YouTube using yt-dlp.
+Songs are fetched dynamically from YouTube using **yt-dlp**.
 
-Features:
+## Features
 
-Trending searches
-Emotion-based keywords
-Multi-language recommendations
-Duplicate filtering
-Fallback recommendations
+- Trending searches
+- Emotion-based keywords
+- Multi-language recommendations
+- Duplicate filtering
+- Fallback recommendations
 
-Implementation:
+---
 
-☁️ Deployment on Render
+# ☁️ Deployment on Render
 
-This project is fully compatible with Render deployment.
+This project is fully compatible with **Render deployment**.
 
-Required Files
-render.yaml
-requirements.txt
-runtime.txt
+## Required Files
 
-Python runtime:
+- `render.yaml`
+- `requirements.txt`
+- `runtime.txt`
 
+### Python Runtime
+
+```bash
 python-3.11.9
+```
 
-📦 Important Packages
+---
+
+# 📦 Important Packages
+
+```txt
 fastapi
 uvicorn
 sentence-transformers
@@ -175,22 +249,30 @@ yt-dlp
 scikit-learn
 pandas
 numpy
+```
 
-🔥 Future Improvements
-Spotify API integration
-User authentication
-Playlist saving
-Mood history tracking
-Real-time music streaming
-AI chatbot integration
-Frontend React app
-Mobile app version
-👨‍💻 Author
+---
 
-Developed by Sneha Mahish
+# 🔥 Future Improvements
 
-Data Sciencence Engineer
+- Spotify API integration
+- User authentication
+- Playlist saving
+- Mood history tracking
+- Real-time music streaming
+- AI chatbot integration
+- React frontend
+- Mobile app version
 
-⭐ If You Like This Project
+---
 
-Give this repository a ⭐ on GitHub and support the project.
+# 👨‍💻 Author
+
+**Developed by Sneha Mahish**  
+Data Science Engineer
+
+---
+
+# ⭐ Support
+
+If you like this project, give this repository a ⭐ on GitHub and support the project.
